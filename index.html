@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>2024 Bucket list</title>
+  <style>
+    .bg {
+      background-image: url("./벚꽃.gif");
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 0 auto;
+      background-color: #141617;
+    }
+
+    .title {
+      margin-top: 50px;
+      color: #E8344E;
+    }
+
+    .msg {
+      color: white;
+      margin-bottom: 40px;
+    }
+
+    .bucket {
+      width: 160px;
+      height: 160px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .img1 {
+      background-image: url("./Bucket01.png");
+      color: white;
+    }
+
+    .img2 {
+      background-image: url("./Bucket02.png");
+      color: #E8344E;
+    }
+
+    .img3 {
+      background-image: url("./Bucket03.png");
+      color: #E8344E;
+    }
+
+    .img4 {
+      background-image: url("./Bucket04.png");
+      color: white;
+    }
+
+    .img5 {
+      background-image: url("./Bucket05.png");
+      color: white;
+    }
+
+    .img6 {
+      background-image: url("./Bucket06.png");
+      color: #E8344E;
+    }
+
+    #alerts-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+  </style>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class='bg center'>
+  <h1 class="title">SPARTHON Bucket list</h1>
+  <p class="msg">꿈을 꾸는 것이 아닌, 이루는 것이다</p>
+  <div id="alerts-container"></div>
+  <div class="flex-row wrap">
+    <div class="bucket img1 center" onclick="myAlert()">
+      자격증 마무리하기
+    </div>
+    <div class="bucket img2 center" onclick="myAlert()">
+      프로젝트 2개 완성하기
+    </div>
+    <div class="bucket img6 center" onclick="myAlert()">
+      포트폴리오 만들기
+    </div>
+    <div class="bucket img4 center" onclick="myAlert()">
+      매일 운동하기
+    </div>
+    <div class="bucket img5 center" onclick="myAlert()">
+      적금 들기
+    </div>
+    <div class="bucket img2 center" onclick="myAlert()">
+      일기 쓰기
+    </div>
+    <div class="bucket img6 center" onclick="myAlert()">
+      언어공부하기
+    </div>
+    <div class="bucket img3 center" onclick="myAlert()">
+      게임 줄이기
+    </div>
+    <div class="bucket img1 center" onclick="myAlert()">
+      핸드폰 사용 줄이기
+    </div>
+  </div>
+
+
+    <script>
+      function myAlert(element, message) {
+        // Check if the bucket element has the "done" class
+        if (element.classList.contains("done")) {
+          const alertElement = document.createElement("div");
+          alertElement.className = "alert alert-success d-flex align-items-center";
+          alertElement.setAttribute("role", "alert");
+
+          // Add content to the alert
+          alertElement.innerHTML = `
+            <div class="alert alert-success" role="alert">
+              <h4 class="alert-heading">Well done!</h4>
+              <p>${message}</p>
+              <hr>
+            </div>`;
+
+          // Append the alert to the alerts-container
+          const alertsContainer = document.getElementById("alerts-container");
+          alertsContainer.appendChild(alertElement);
+
+          // Remove the alert after a certain time (e.g., 3 seconds)
+          setTimeout(() => {
+            alertElement.remove();
+          }, 3000);
+        }
+      }
+
+      const buckets = document.querySelectorAll(".bucket");
+      buckets.forEach((bucket, index) => {
+        bucket.addEventListener("click", function () {
+          // Toggle the "done" class on the bucket element
+          bucket.classList.toggle("done");
+
+          // Update the local storage based on the "done" class
+          if (bucket.classList.contains("done")) {
+            localStorage.setItem("bucket" + index, "done");
+            myAlert(bucket, `Congratulations on your achievement!`);
+          } else {
+            localStorage.setItem("bucket" + index, "");
+          }
+        });
+      });
+
+      // Restore the bucket states on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        const buckets = document.querySelectorAll(".bucket");
+        buckets.forEach((bucket, index) => {
+          const isDone = localStorage.getItem("bucket" + index) === "done";
+          if (isDone) {
+            bucket.classList.add("done");
+          }
+        });
+      });
+    </script>
+
+
+</body>
+
+</html>
